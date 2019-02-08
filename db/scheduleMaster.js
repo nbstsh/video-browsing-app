@@ -5,18 +5,23 @@ const config = require('config')
     schedule Master collectins
 ******************************************/
 const scheduleMasterSchema = new mongoose.Schema({
-    selectedSchedule: mongoose.Schema.Types.ObjectId,
+    selectedScheduleId: String,
     duration: Number,
 })
 
 const ScheduleMaster = mongoose.model('ScheduleMaster', scheduleMasterSchema)
 
+
 async function generateDefaultScheduleMaster(defaultScheduleId) {
     await ScheduleMaster.deleteOne({})
     ScheduleMaster.create({
-        selectedSchedule: defaultScheduleId,
+        selectedScheduleId: defaultScheduleId,
         duration: config.get('schedule.duration')
     })
 }
 
-module.exports = { generateDefaultScheduleMaster }
+function getScheduleMaster() {
+    return ScheduleMaster.findOne({})
+}
+
+module.exports = { generateDefaultScheduleMaster, getScheduleMaster }

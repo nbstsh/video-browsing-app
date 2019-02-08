@@ -9,7 +9,7 @@ const videoSchema = new mongoose.Schema({
     type: Number, 
     path: String, 
     title: String, 
-    description: String , 
+    description: String ,
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }
 })
@@ -29,3 +29,13 @@ async function getVidoes() {
     return videos
 }
 
+async function resetVideos() {
+    const videos = await Video.find({})
+    videos.forEach(v => v.delete())
+}
+
+module.exports = {
+    createVideo,
+    getVidoes,
+    resetVideos
+}

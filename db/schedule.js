@@ -1,13 +1,27 @@
 const mongoose = require('mongoose')
 const debugData = require('debug')('app:data')
-
+const { getScheduleMaster } = require('./scheduleMaster')
+const ObjectId = mongoose.Types.ObjectId
 
 /******************************************
     schedule collectins
 ******************************************/
 const scheduleSchema = new mongoose.Schema({
-    times: [ Number ] 
+    week: [ {
+        day: String,
+        times: [{ 
+            videoId: String,
+            time: Number
+        }]
+    } ] 
 })
+// const scheduleSchema = new mongoose.Schema({
+//     times: [ {
+//         day: Number,
+//         videoId: String,
+//         time: Number
+//     } ] 
+// })
 
 const Schedule = mongoose.model('Schedule', scheduleSchema)
 
@@ -18,11 +32,15 @@ async function createSchedule(input) {
     return result
 }
 
-async function getSchedules() {
-    const schedules = await Schedule.find({})
-    return schedules
+function getSchedules() {
+    return Schedule.find({})
 }
 
+async function getSelectedSchedules() {
+    const scheduleMaster = await getScheduleMaster()
+    const schedules = await Schedule.findOne( { _id: scheduleMaster.selectedScheduleId })
+    return schedules
+}
 
 async function resetSchedule() {
     const schedules = await Schedule.find({})
@@ -34,5 +52,6 @@ async function resetSchedule() {
 module.exports = {
     createSchedule,
     getSchedules,
-    resetSchedule
+    resetSchedule,
+    getSelectedSchedules
 }

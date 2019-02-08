@@ -10,7 +10,8 @@ const mongoose = require('mongoose')
 const express = require('express')
 const app = express()
 
-const { resetScheduleData } = require('./db/dummy')
+const { resetScheduleData, generateDummyVideos } = require('./db/dummy')
+const { getSelectedSchedules } = require('./db/schedule')
 
 app.set('view engine', 'pug')
 
@@ -25,8 +26,8 @@ mongoose.connect(`mongodb://${config.get('db.host')}:${config.get('db.port')}/${
 /******************************************
     dummy 
 ******************************************/
-// resetScheduleData()
-
+resetScheduleData()
+// generateDummyVideos()
 
 /******************************************
     middleware
@@ -70,6 +71,14 @@ app.post('/videos', (req, res) => {
 })
 
 
+
+app.get('/schedules', async (req, res) => {
+    const schedules = await getSelectedSchedules()
+
+
+
+    res.send(JSON.stringify(schedules))
+})
 
 /******************************************
     util
