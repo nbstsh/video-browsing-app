@@ -5,16 +5,23 @@ const debugError = require('debug')('app:error')
 const path = require('path')
 const morgan = require('morgan')
 const Joi = require('joi')
+const moment = require('moment')
 const mongoose = require('mongoose')
 const express = require('express')
 const app = express()
 
 
-// Mongo DB 
+/******************************************
+    Mongo DB
+******************************************/
 mongoose.connect('mongodb://localhost/videoBrowsingApp', { useNewUrlParser: true })
     .then(() => debugStartup('Connected to db ....'))
     .catch(err => debugStartup('Failed to connect to db ....', err))
 
+
+/******************************************
+    video collections
+******************************************/
 const videoSchema = new mongoose.Schema({
     videoId: String, 
     type: Number, 
@@ -41,7 +48,51 @@ async function getVidoes() {
 }
 
 
-// Middleware 
+/******************************************
+    schedule collectins
+******************************************/
+const scheduleSchema = new mongoose.Schema({
+    day: Number,
+    time: Number 
+})
+
+const Schedule = mongoose.model('Schedule', scheduleSchema)
+
+async function createSchedule(input) {
+    const schedule = new Schedule(input)
+    const result = await schedule.save()
+    debugData(result)
+    return result
+}
+
+/******************************************
+    dummy schedule data
+******************************************/
+async function generateScheduleTable(duration) {
+    for(let minute = 0; minute < 1440; minute+=duration) {
+        const time = moment().minute(minute).format('HHmm')
+        await createSchedule({ time })
+
+    }
+}
+
+async function resetSchedule() {
+    const schedules = await Schedule.find({})
+    console.log(schedules)
+    schedules.forEach((schedule) => {
+        schedule.delete()
+    })
+}
+
+// resetSchedule()
+// console.log(moment().hour(0).minute(0).format('HHmm'))
+// generateScheduleTable(30)
+
+
+
+/******************************************
+    middleware
+******************************************/
 app.use(express.json())
 app.use(express.urlencoded( { extended: true }))
 app.use(express.static(path.join(__dirname + '/public')))
@@ -51,7 +102,10 @@ if (app.get('env') === 'development') {
 }
 
 
-// Route 
+
+/******************************************
+    Route
+******************************************/ 
 app.get('/videos', (req, res) => {
     getVidoes().then((videos) => {
         res.send(videos)
