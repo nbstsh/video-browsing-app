@@ -1,0 +1,14 @@
+{
+    "dayId": {
+        "monday": 1,
+        "tuesday": 2,
+        "wednesday": 3,
+        "thrusday": 4,
+        "friday": 5,
+        "saturday": 6,
+        "sunday": 7
+    },
+    "db": {
+        "name": "videoBrowsingApp"
+    }
+}

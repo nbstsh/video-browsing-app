@@ -6,15 +6,17 @@ const path = require('path')
 const morgan = require('morgan')
 const Joi = require('joi')
 const moment = require('moment')
+const config = require('config')
 const mongoose = require('mongoose')
 const express = require('express')
 const app = express()
 
+app.set('view engine', 'pug')
 
 /******************************************
     Mongo DB
 ******************************************/
-mongoose.connect('mongodb://localhost/videoBrowsingApp', { useNewUrlParser: true })
+mongoose.connect(`mongodb://${config.get('db.host')}:${config.get('db.port')}/${config.get('db.name')}`, { useNewUrlParser: true })
     .then(() => debugStartup('Connected to db ....'))
     .catch(err => debugStartup('Failed to connect to db ....', err))
 
@@ -61,19 +63,27 @@ const Schedule = mongoose.model('Schedule', scheduleSchema)
 async function createSchedule(input) {
     const schedule = new Schedule(input)
     const result = await schedule.save()
-    debugData(result)
+    debugData('schedule', result)
     return result
+}
+
+async function getSchedules() {
+    const schedules = await Schedule.find({})
+    return schedules
 }
 
 /******************************************
     dummy schedule data
 ******************************************/
-async function generateScheduleTable(duration) {
-    for(let minute = 0; minute < 1440; minute+=duration) {
-        const time = moment().minute(minute).format('HHmm')
-        await createSchedule({ time })
-
-    }
+// generate schedule documents( mon ~ sun / given time schedule)
+async function generateScheduleTable(duration) { 
+    const dayIds =  config.get('dayId')
+    Object.values(dayIds).forEach(async (day) => {
+        for(let minute = 0; minute < 1440; minute+=duration) {
+            const time = moment().minute(minute).format('HHmm')
+            await createSchedule({ day, time })
+        }
+    })
 }
 
 async function resetSchedule() {
@@ -84,9 +94,15 @@ async function resetSchedule() {
     })
 }
 
-// resetSchedule()
-// console.log(moment().hour(0).minute(0).format('HHmm'))
-// generateScheduleTable(30)
+// (async () => {
+//     const duration = 30
+//     await resetSchedule()
+//     await generateScheduleTable(duration)
+//     const schedules = await getSchedules()
+//     console.log(schedules.sort((a, b) => a.time - b.time))
+// })()
+
+
 
 
 
@@ -132,7 +148,10 @@ app.post('/videos', (req, res) => {
 })
 
 
-// Util
+
+/******************************************
+    util
+******************************************/
 function validateVideo(video) {
     const schema = {
         videoId: Joi.string().required(), 
