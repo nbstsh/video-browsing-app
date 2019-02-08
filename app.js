@@ -54,8 +54,7 @@ async function getVidoes() {
     schedule collectins
 ******************************************/
 const scheduleSchema = new mongoose.Schema({
-    day: Number,
-    time: Number 
+    times: [ Number ] 
 })
 
 const Schedule = mongoose.model('Schedule', scheduleSchema)
@@ -72,35 +71,52 @@ async function getSchedules() {
     return schedules
 }
 
+
+/******************************************
+    schedule collectins
+******************************************/
+const scheduleMasterSchema = new mongoose.Schema({
+    selectedSchedule: mongoose.Schema.Types.ObjectId,
+    duration: Number,
+})
+
+const ScheduleMaster = mongoose.model('ScheduleMaster', scheduleMasterSchema)
+
+async function generateDefaultScheduleMaster(defaultScheduleId) {
+    await ScheduleMaster.deleteOne({})
+    ScheduleMaster.create({
+        selectedSchedule: defaultScheduleId,
+        duration: config.get('schedule.duration')
+    })
+}
+
 /******************************************
     dummy schedule data
 ******************************************/
 // generate schedule documents( mon ~ sun / given time schedule)
 async function generateScheduleTable(duration) { 
-    const dayIds =  config.get('dayId')
-    Object.values(dayIds).forEach(async (day) => {
-        for(let minute = 0; minute < 1440; minute+=duration) {
-            const time = moment().minute(minute).format('HHmm')
-            await createSchedule({ day, time })
-        }
-    })
+    let times = []
+    for(let minute = 0; minute < 1440; minute+=duration) {
+        times.push(moment().minute(minute).format('HHmm'))
+    }
+    return await createSchedule({ times })
 }
 
 async function resetSchedule() {
     const schedules = await Schedule.find({})
-    console.log(schedules)
     schedules.forEach((schedule) => {
         schedule.delete()
     })
 }
 
-// (async () => {
-//     const duration = 30
-//     await resetSchedule()
-//     await generateScheduleTable(duration)
-//     const schedules = await getSchedules()
-//     console.log(schedules.sort((a, b) => a.time - b.time))
-// })()
+
+
+(async () => {
+    await resetSchedule()
+    const schedule = await generateScheduleTable(config.get('schedule.duration'))
+    console.log(schedule)
+    generateDefaultScheduleMaster(schedule.id)
+})()
 
 
 

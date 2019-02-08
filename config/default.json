@@ -1,13 +1,25 @@
 {
-    "dayId": {
-        "monday": 1,
-        "tuesday": 2,
-        "wednesday": 3,
-        "thrusday": 4,
-        "friday": 5,
-        "saturday": 6,
-        "sunday": 7
-    },
+    "schedule": {
+        "dayId": {
+            "monday": 1,
+            "tuesday": 2,
+            "wednesday": 3,
+            "thrusday": 4,
+            "friday": 5,
+            "saturday": 6,
+            "sunday": 7
+        },
+        "day": {
+            "1": "monday",
+            "2": "tuesday",
+            "3": "wednesday",
+            "4": "thrusday",
+            "5": "friday",
+            "6": "saturday",
+            "7": "sunday"
+        },
+        "duration": 30
+    },  
     "db": {
         "name": "videoBrowsingApp"
     }
