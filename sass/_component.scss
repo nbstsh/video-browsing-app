@@ -1,0 +1,44 @@
+
+.display {
+
+    max-width: 120rem;
+    width: 80%;
+    margin: 3rem auto;
+    
+    &__video-box {
+        
+    }
+
+    &__video {
+
+    }
+}
+
+
+.program {
+    &__table {
+        max-width: 120rem;
+        margin: 3rem auto;
+        background-color: var(--color-grey-light-3);
+
+        display: flex;
+
+    }
+
+    &__week {
+        // TEST
+        border: 1px solid blue;
+        width: calc(100% / 7);
+    }
+
+    &__thumnail {
+        border: 1px solid red;
+        width: 100%;
+        background-size: cover;
+
+        & > img {
+            width: 100%;
+            display: block;
+        }
+    }
+}
