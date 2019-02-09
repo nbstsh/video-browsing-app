@@ -26,8 +26,9 @@ mongoose.connect(`mongodb://${config.get('db.host')}:${config.get('db.port')}/${
 /******************************************
     dummy 
 ******************************************/
-resetScheduleData()
+// resetScheduleData()
 // generateDummyVideos()
+
 
 /******************************************
     middleware
@@ -45,6 +46,12 @@ if (app.get('env') === 'development') {
 /******************************************
     Route
 ******************************************/ 
+app.get('/', async (req, res) => {
+    const schedules = await getSelectedSchedules()
+    res.render('index', { week: schedules.week })
+})
+
+
 app.get('/videos', (req, res) => {
     getVidoes().then((videos) => {
         res.send(videos)
