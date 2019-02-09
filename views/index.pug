@@ -5,43 +5,34 @@ html
 
     .display 
       .display__video-box#video-box
-        vidoe.display__video#video(autobuffer autoplay controls loop muted width="100%")
+        video.display__video#video(autobuffer autoplay controls loop muted width="100%")
           source#source
 
     mixin listItems(items)
       each item in items
-        li.program__thumnail(class=item.time)
-          img(src="images/sample.png" alt="" data-path="" data-type data-videoId)
+        td.program__thumnail(class=item.time)
+          img(src="" alt="" data-path="" data-type data-videoId)
     
     mixin list(dayObj)
-      ul.program__week(class=dayObj.day)
+      tr.program__week(class=dayObj.day)
         +listItems(dayObj.times)
 
+    //- create tr elements for thumnails
     mixin scheduleTable(week)
       each dayObj in week
           +list(dayObj)
-  
-    .program 
-      .program__table
-        +scheduleTable(week)
+
+    //- create tr element to show time
+    mixin timeList(times)
+      tr.program__time-list
+        each time in times
+          td.program__time-item #{time}
     
-    div #{JSON.stringify(week)}
+    .program 
+      table.program__table
+        tbody
+          +timeList(times)
+          +scheduleTable(week)
+    
+    
 
-
-//- 
-    <div class="display">
-        <div class="display__video-box" id="video-box">
-            <video autobuffer autoplay controls loop muted id='video' width="100%" class="display__video">
-                <!-- <source id="source" src="videos/sample.mov"> -->
-                <source id="source" src="">
-
-            </video>
-        </div>
-    </div>
-
-
-    <div class="program">
-        <div class="program__table">
-            <ul class="program__week">
-                <li class="program__thumnail">
-                    <img src="images/sample.png" alt="sample image" data-url="videos/sample.mov">

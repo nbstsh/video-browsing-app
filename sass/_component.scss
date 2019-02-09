@@ -18,17 +18,32 @@
 .program {
     &__table {
         max-width: 120rem;
+        width: 90%;
         margin: 3rem auto;
         background-color: var(--color-grey-light-3);
 
-        display: flex;
+        tbody {
+            display: flex;
+        }
 
+        tr {
+            display: grid;
+
+        }
     }
 
     &__week {
         // TEST
         border: 1px solid blue;
         width: calc(100% / 7);
+    }
+
+    &__time-list {
+
+    }
+
+    &__time-item {
+        padding: 3rem;
     }
 
     &__thumnail {

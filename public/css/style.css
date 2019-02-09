@@ -35,13 +35,20 @@ ul {
 
 .program__table {
   max-width: 120rem;
+  width: 90%;
   margin: 3rem auto;
-  background-color: var(--color-grey-light-3);
-  display: flex; }
+  background-color: var(--color-grey-light-3); }
+  .program__table tbody {
+    display: flex; }
+  .program__table tr {
+    display: grid; }
 
 .program__week {
   border: 1px solid blue;
   width: calc(100% / 7); }
+
+.program__time-item {
+  padding: 3rem; }
 
 .program__thumnail {
   border: 1px solid red;

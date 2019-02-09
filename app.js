@@ -6,6 +6,7 @@ const path = require('path')
 const morgan = require('morgan')
 const Joi = require('joi')
 const config = require('config')
+const moment = require('moment')
 const mongoose = require('mongoose')
 const express = require('express')
 const app = express()
@@ -48,8 +49,18 @@ if (app.get('env') === 'development') {
 ******************************************/ 
 app.get('/', async (req, res) => {
     const schedules = await getSelectedSchedules()
-    res.render('index', { week: schedules.week })
+    const times = generateTimelist(config.get('schedule.duration'))
+
+    res.render('index', { week: schedules.week, times })
 })
+
+function generateTimelist(duration) {
+    const times = []
+    for(let minute = 0; minute < 1440; minute+=duration) {
+        times.push(moment().minute(minute).format('HHmm'))
+    }
+    return times.sort((a, b) => a - b)
+}
 
 
 app.get('/videos', (req, res) => {
