@@ -23,7 +23,7 @@ async function createVideo(input) {
     return result
 }
 
-async function getVidoes() {
+async function getVideos() {
     const videos = await Video.find({})
     debugData('videos', videos)
     return videos
@@ -36,6 +36,6 @@ async function resetVideos() {
 
 module.exports = {
     createVideo,
-    getVidoes,
+    getVideos,
     resetVideos
 }

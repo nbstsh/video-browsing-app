@@ -13,6 +13,7 @@ const app = express()
 
 const { resetScheduleData, generateDummyVideos } = require('./db/dummy')
 const { getSelectedSchedules } = require('./db/schedule')
+const { getVideos } = require('./db/video')
 
 app.set('view engine', 'pug')
 
@@ -63,13 +64,9 @@ function generateTimelist(duration) {
 }
 
 
-app.get('/videos', (req, res) => {
-    getVidoes().then((videos) => {
-        res.send(videos)
-    }).catch((err) => {
-        debugError(err)
-        res.send('Error')
-    })
+app.get('/api/videos', async (req, res) => {
+    const videos = await getVideos()
+    res.send(videos)
 })
 
 
@@ -89,13 +86,12 @@ app.post('/videos', (req, res) => {
 })
 
 
-
-app.get('/schedules', async (req, res) => {
+// Admin
+app.get('/admin/schedules', async (req, res) => {
     const schedules = await getSelectedSchedules()
+    const times = generateTimelist(config.get('schedule.duration'))
 
-
-
-    res.send(JSON.stringify(schedules))
+    res.render('admin/schedule', { week: schedules.week, times })
 })
 
 /******************************************

@@ -1,20 +1,14 @@
 
-mixin listItems(items)
-  each item in items
-    td.program__thumnail(class=item.time)
-      img(src="" alt="" data-path="" data-type data-videoId)
-
-mixin list(dayObj)
-  tr.program__week(class=dayObj.day)
-    +listItems(dayObj.times)
-
-//- create tr elements for thumnails
-mixin scheduleTable(week)
-  each dayObj in week
-      +list(dayObj)
-
 //- create tr element to show time
 mixin timeList(times)
   tr.program__time-list
     each time in times
       td.program__time-item #{time}
+
+//- create tr elements for thumnails
+mixin scheduleTable(week, attrs)
+  each dayObj in week
+    tr.program__week(class=dayObj.day)
+      each time in dayObj.times
+        td.program__thumnail(data-time-id=time.id)&attributes(attrs)
+          img(src="" alt="" data-path="" data-type data-videoId)

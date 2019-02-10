@@ -57,3 +57,46 @@ ul {
   .program__thumnail > img {
     width: 100%;
     display: block; }
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  min-height: 100vh;
+  z-index: 99999;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+  .modal[data-status="open"] {
+    visibility: visible; }
+    .modal[data-status="open"] .modal__container {
+      visibility: visible;
+      opacity: 1;
+      transform: scale(1); }
+  .modal[data-status="close"] {
+    visibility: hidden; }
+    .modal[data-status="close"] .modal__container {
+      visibility: hidden;
+      opacity: 0;
+      transform: scale(0.7); }
+  .modal__background {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(255, 255, 255, 0.3);
+    position: absolute;
+    top: 0;
+    left: 0; }
+    .modal__background--dark {
+      background-color: rgba(0, 0, 0, 0.8); }
+  .modal__container {
+    background-color: #fff;
+    transition: all .3s;
+    width: 80%;
+    max-width: 70rem;
+    padding: 3rem 5rem;
+    border-radius: 5px;
+    box-shadow: 0 1rem 1.5rem rgba(0, 0, 0, 0.2); }
+
+.video-option__list-item {
+  border: 1px solid red; }

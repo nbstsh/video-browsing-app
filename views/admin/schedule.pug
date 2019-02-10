@@ -1,0 +1,29 @@
+extends ../layout/main
+
+block head 
+
+  title video schedule
+  link(rel="stylesheet", href="/css/style.css")
+
+
+block content 
+  include ../mixins/schedule-table
+
+  .program 
+    table.program__table
+      tbody
+        +timeList(times)
+        +scheduleTable(week, {
+            'class':  'open-modal',
+            'data-target': '#video-option-modal'
+          })
+
+
+block foot
+
+  include ../includes/modals/video-option
+
+
+block script 
+
+  script(src="/js/schedule.js")
