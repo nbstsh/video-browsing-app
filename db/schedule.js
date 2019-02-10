@@ -1,7 +1,6 @@
 const mongoose = require('mongoose')
 const debugData = require('debug')('app:data')
 const { getScheduleMaster } = require('./scheduleMaster')
-const ObjectId = mongoose.Types.ObjectId
 
 /******************************************
     schedule collectins

@@ -1,38 +1,40 @@
-doctype html
-html
-  include includes/head.pug
-  body
+//- doctype html
+//- html
+//-   include includes/head.pug
+//-   include mixins/schedule-table.pug
+//-   body
 
-    .display 
-      .display__video-box#video-box
-        video.display__video#video(autobuffer autoplay controls loop muted width="100%")
-          source#source
+//-     .display 
+//-       .display__video-box#video-box
+//-         video.display__video#video(autobuffer autoplay controls loop muted width="100%")
+//-           source#source
 
-    mixin listItems(items)
-      each item in items
-        td.program__thumnail(class=item.time)
-          img(src="" alt="" data-path="" data-type data-videoId)
+//-     .program 
+//-       table.program__table
+//-         tbody
+//-           +timeList(times)
+//-           +scheduleTable(week)
     
-    mixin list(dayObj)
-      tr.program__week(class=dayObj.day)
-        +listItems(dayObj.times)
+extends layout/main.pug
 
-    //- create tr elements for thumnails
-    mixin scheduleTable(week)
-      each dayObj in week
-          +list(dayObj)
+block head 
 
-    //- create tr element to show time
-    mixin timeList(times)
-      tr.program__time-list
-        each time in times
-          td.program__time-item #{time}
-    
-    .program 
-      table.program__table
-        tbody
-          +timeList(times)
-          +scheduleTable(week)
-    
-    
+  title video browing app
+  link(rel="stylesheet", href="/css/style.css")
+
+block content 
+
+  include mixins/schedule-table.pug
+  .display 
+    .display__video-box#video-box
+      video.display__video#video(autobuffer autoplay controls loop muted width="100%")
+        source#source
+
+  .program 
+    table.program__table
+      tbody
+        +timeList(times)
+        +scheduleTable(week)
+
+block script 
 
