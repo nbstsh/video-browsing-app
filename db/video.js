@@ -29,6 +29,10 @@ async function getVideos() {
     return videos
 }
 
+async function getVideo(id) {
+    return await Video.findById(id)
+}
+
 async function resetVideos() {
     const videos = await Video.find({})
     videos.forEach(v => v.delete())
@@ -37,5 +41,6 @@ async function resetVideos() {
 module.exports = {
     createVideo,
     getVideos,
+    getVideo,
     resetVideos
 }

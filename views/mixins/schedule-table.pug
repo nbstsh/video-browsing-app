@@ -10,6 +10,6 @@ mixin scheduleTable(week, attrs)
   each dayObj in week
     tr.program__week(class=dayObj.day)
       each time in dayObj.times
-        td.program__thumnail(data-time-id=time.id)&attributes(attrs)
-          img(src="" alt="" data-path="" data-type data-videoId)
+        td.program__thumnail(data-time-id=time.id data-selected-video=time.videoId)&attributes(attrs)
+          img
   

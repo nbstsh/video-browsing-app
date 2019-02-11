@@ -90,7 +90,6 @@ app.post('/videos', (req, res) => {
 app.get('/admin/schedules', async (req, res) => {
     const schedules = await getSelectedSchedules()
     const times = generateTimelist(config.get('schedule.duration'))
-
     res.render('admin/schedule', { week: schedules.week, times })
 })
 
@@ -102,6 +101,7 @@ app.post('/admin/schedules', async (req, res) => {
     // set selected video's id to correcponding time object in schedule collection
     schedule.week.forEach(({ times }) => {
         times.forEach(time => {
+            time.videoId = ''
             const selectedVideo = selectedVideos.find(v => v.timeId === time._id.toString())
             if (!selectedVideo) return 
             time.videoId = selectedVideo.videoId 

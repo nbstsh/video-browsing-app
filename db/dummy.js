@@ -42,9 +42,9 @@ async function generateDummyVideos() {
         createVideo({
             videoId: `video id ${i}`, 
             type: 0, 
-            path: `path${i}`, 
-            title: `String${i}`, 
-            description: `description${i}`
+            path: `https://images.unsplash.com/photo-1549758895-6eab7830c05d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80`, 
+            title: `Sample ${i}`, 
+            description: `description ${i}`
         })
     }
 }

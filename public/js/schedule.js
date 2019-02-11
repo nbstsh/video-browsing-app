@@ -1,16 +1,22 @@
 let DOMAIN = 'localhost:3000'
 let API_VIDEOS_URL = `http://localhost:3000/api/videos`
 
+async function initPage() {
+    await laodVideos()
+    initThumnail()
+    initSelectedVideos()
+}
+
+initPage()
+
 /************************************
   Video
 *************************************/
 let videos = null
 
-const laodVideos = async () => {
+async function laodVideos() {
     videos = await fetch(API_VIDEOS_URL).then(res => res.json())
 }
-
-laodVideos()
 
 const findVideo = (id) => videos.find(v => v._id === id)
 
@@ -101,15 +107,15 @@ const generateCancelVideoButtonEl = () => {
 const renderThumnail = ({ timeId, videoId }) => {
     const thumnailEl = document.querySelector(`[data-time-id="${timeId}"]`)
     const video = findVideo(videoId)
+
+    const imgEl = thumnailEl.querySelector('img')
     if (video) {
         // TODO: set img props to show thumnail
-        thumnailEl.textContent =  video.title
+        imgEl.src = video.path
     } else {
         // TODO: reset thumnail 
-        thumnailEl.textContent = ''
+        imgEl.src = ''
     }
-    
-
 }
 
 const initCancelVideoEvent = () => {
@@ -121,11 +127,33 @@ const initCancelVideoEvent = () => {
     })
 }
 
+// render initial selected videos
+function initThumnail() {
+    document.querySelectorAll('[data-selected-video]').forEach(el => {
+        const video = findVideo(el.dataset.selectedVideo)
+        if (!video) return 
+        const imgEl = el.querySelector('img')
+        imgEl.setAttribute(`data-video`, JSON.stringify(video))
+        imgEl.src = video.path
+    })
+}
+
 
 /************************************
   selected video
 *************************************/
 const selectedVideos = []
+
+function initSelectedVideos() {
+    document.querySelectorAll('[data-selected-video]').forEach(el => {
+        if (!el.dataset.selectedVideo) return
+
+        selectedVideos.push({
+            timeId: el.dataset.timeId,
+            videoId: el.dataset.selectedVideo
+        })
+    })
+}
 
 const findSelectedVideoId = (timeId) => {
     const selectedVideo = selectedVideos.find(v => v.timeId === timeId)
@@ -159,11 +187,16 @@ const closeModal = (targetId) => {
     document.querySelector(targetId).dataset.status = 'close'
 }
 
+document.querySelectorAll('.open-modal').forEach(el => {
+    el.addEventListener('click', (e) => {
+        openModal(e.target.dataset.target)
+    })
+})
+
 // TODO : move to common js file
 document.querySelectorAll('.close-modal').forEach(el => {
     el.addEventListener('click', (e) => {
-        const targetId = e.target.dataset.target
-        document.querySelector(targetId).dataset.status = 'close'
+         closeModal(e.target.dataset.target)
     })
 })
 
@@ -177,11 +210,9 @@ let timeId
 const setTimeId = (id) => timeId = id
 const getTimeId = () => timeId
 
-// open modal
 document.querySelectorAll('*[data-time-id]').forEach(el => {
     el.addEventListener('click', (e) => {
         renderVideoOptionModal()
-        openModal(e.target.dataset.target)
         setTimeId(extractTimeId(e.target))
         renderSelectedVideoBox()
     })
