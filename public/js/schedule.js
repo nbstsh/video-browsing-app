@@ -198,3 +198,17 @@ new MutationObserver(mutations => {
     attributeOldValue: true, 
     attributeFilter: ['data-status']
 })
+
+
+/************************************
+  form
+*************************************/
+
+document.querySelector('#schedule-form').addEventListener('submit', (e) => {
+    e.preventDefault()
+    const inputEl = e.target.children.selectedVideos
+    inputEl.value = JSON.stringify(selectedVideos)
+    console.log(inputEl.value)
+
+    e.target.submit()
+})

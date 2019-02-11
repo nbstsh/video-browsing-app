@@ -17,6 +17,9 @@ block content
             'class':  'open-modal',
             'data-target': '#video-option-modal'
           })
+    form#schedule-form(method="POST")
+      input(type="hidden" name="selectedVideos")
+      button.button  save
 
 
 block foot

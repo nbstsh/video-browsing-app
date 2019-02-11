@@ -94,6 +94,24 @@ app.get('/admin/schedules', async (req, res) => {
     res.render('admin/schedule', { week: schedules.week, times })
 })
 
+app.post('/admin/schedules', async (req, res) => {
+    const selectedVideos = JSON.parse(req.body.selectedVideos)
+    if (!selectedVideos || selectedVideos.length === 0) return 
+
+    let schedule = await getSelectedSchedules()
+    // set selected video's id to correcponding time object in schedule collection
+    schedule.week.forEach(({ times }) => {
+        times.forEach(time => {
+            const selectedVideo = selectedVideos.find(v => v.timeId === time._id.toString())
+            if (!selectedVideo) return 
+            time.videoId = selectedVideo.videoId 
+        })
+    })
+
+    schedule = await schedule.save()
+    res.send(schedule)
+})
+
 /******************************************
     util
 ******************************************/
