@@ -6,10 +6,15 @@ mixin timeList(times)
       td.program__time-item #{time}
 
 //- create tr elements for thumnails
-mixin scheduleTable(week, attrs)
-  each dayObj in week
+mixin scheduleTable(days, attrs)
+  each dayObj in days
     tr.program__week(class=dayObj.day)
       each time in dayObj.times
-        td.program__thumnail(data-time-id=time.id data-selected-video=time.videoId)&attributes(attrs)
-          img
+        if time.video
+          - const { _id, path, title, description } = time.video
+          td.program__thumnail(data-time-id=time.id data-video-id=_id data-title=title data-description=description)&attributes(attrs)
+            img(src=path)
+        else
+          td.program__thumnail(data-time-id=time.id)&attributes(attrs)
+            img
   

@@ -13,7 +13,7 @@ block content
     table.program__table
       tbody
         +timeList(times)
-        +scheduleTable(week, {
+        +scheduleTable(days, {
             'class':  'open-modal',
             'data-target': '#video-option-modal'
           })
@@ -29,4 +29,4 @@ block foot
 
 block script 
 
-  script(src="/js/schedule.js")
+  script(src="/js/admin/schedule.js")
