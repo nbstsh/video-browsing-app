@@ -1,66 +1,54 @@
-const moment = require('moment')
 const config = require('config')
+const _ = require('lodash')
+const debugError = require('debug')('app:error')
+const debugData = require('debug')('app:data')
+const ObjectId = require('mongoose').Types.ObjectId
 const express = require('express')
 const router = express.Router()
 
 const { Schedule } = require('../../models/schedule')
 const { Video } = require('../../models/video')
 
-const { getSelectedSchedule } = require('../../models/helper')
+const { findSelectedSchedule } = require('../../models/helper')
 
 
 router.get('/', async (req, res) => {
-    const { days } = await getSelectedSchedule()
+    const { days } = await findSelectedSchedule()
     const times = generateTimeList(days[0].times)
     res.render('admin/schedule', { days, times })
 })
 
-
 router.post('/', async (req, res) => {
     const selectedVideos = JSON.parse(req.body.selectedVideos)
-    if (!selectedVideos || selectedVideos.length === 0) return 
-
-    let schedule = await Schedule.find()
-
-    // set selected video's id to correcponding time object in schedule collection
-
-    const updateData = []
-    schedule.week.forEach(({ times }) => {
-        times.forEach(time => {
-            const selectedVideo = selectedVideos.find(v => v.timeId=== time._id.toString())
-            if (selectedVideo) updateData.push({ time, videoId: selectedVideo.videoId })
-        })
-    })
-    
-    const updateVideo = () => {
-        let promise = Promise.resolve()
-        updateData.forEach(update => {
-            promise = promise.then(() => {
-                return Video.findById(update.videoId)
-            }).then(video => {
-                if (video) update.time.video = {
-                    _id: video._id,
-                    videoId: video.videoId,
-                    type: video.type,
-                    path: video.path,
-                    title: video.title,
-                    description: video.description
-                }
-            })
-        })
-        return promise
+    if (validateSelectedVideos(selectedVideos)){
+        // TODO : error handling
+        debugError('Invalid selectedVideos')
+        res.redirect('/admin/schedules')
     }
 
-    
-    await updateVideo()
-    console.log(updateData)
+    const schedule = await findSelectedSchedule()
 
-    console.log('************ save scheduel *************')
-    schedule = await schedule.save()
+    const populatingVideoInTimeObj = selectedVideos.map(v => new Promise(async (resolve) => {
+        const time = findTimeObj(schedule, v.timeId)
+        if (v.videoId) {
+            const video = await Video.findById(v.videoId)
+            time.video = _.pick(video, ['_id', 'videoId', 'type', 'path', 'title', 'description'])
+        } else {
+            time.video = null
+        }
+        resolve(time)
+    }))
+
+    const times = await Promise.all(populatingVideoInTimeObj)
+    debugData({ times })
+
+    await schedule.save()
+
     res.send(schedule)
 })
 
 
+// to create ul element to display time schedule
 function generateTimeList(times) {
     return times.reduce((acc, cur) =>  {
         acc.push(cur.time)
@@ -68,5 +56,23 @@ function generateTimeList(times) {
     }, [])
 }
 
+function validateSelectedVideos(selectedVideos) {
+    for(let v of selectedVideos) {
+        const isValid = ObjectId.isValid(v.timeId) && ObjectId.isValid(v.videoId)
+        if (!isValid) return false
+    }
+    return true
+}
+
+// find time object with given _id inside schedule document
+function findTimeObj({ days }, timeId) {
+    console.log(timeId)
+    for(let day of days) {
+        for(let timeObj of day.times) {
+            if (timeObj._id.toString() === timeId) return timeObj
+        }
+    }
+    return null
+}
 
 module.exports = router

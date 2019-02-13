@@ -1,7 +1,7 @@
 
 const { SelectedSchedule } = require('./selectedSchedule')
 
-async function getSelectedSchedule() {
+async function findSelectedSchedule() {
     const { schedule } =  await SelectedSchedule.findOne({ selected: true }).populate('schedule')
 
     const sortTimes = (times) => times.sort((a, b) => a.time - b.time)
@@ -11,5 +11,5 @@ async function getSelectedSchedule() {
 }
 
 module.exports = {
-    getSelectedSchedule
+    findSelectedSchedule
 }
