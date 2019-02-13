@@ -3,8 +3,6 @@ let API_VIDEOS_URL = `http://localhost:3000/api/videos`
 
 async function initPage() {
     await laodVideos()
-    initThumnail()
-    initSelectedVideos()
 }
 
 initPage()
@@ -65,10 +63,9 @@ const initVideoSelectButtonEvent = () => {
     document.querySelectorAll('.video-select').forEach(button => {
         button.addEventListener('click', (e) => {
             const videoId = e.target.dataset.videoId 
-            removeSelectedVideo()
-            createSelectedVideo(videoId)
+            storeSelectedVideo(videoId)
             renderSelectedVideoBox()
-            renderThumnail(selectedVideos.find(v => v.timeId === getTimeId()))
+            renderThumnail(selectedVideos.find(v => v.timeId === getCurrentTimeId()))
         })
     })
 }
@@ -120,60 +117,46 @@ const renderThumnail = ({ timeId, videoId }) => {
 
 const initCancelVideoEvent = () => {
     document.querySelector('#video-cancel').addEventListener('click', () => {
-        removeSelectedVideo()
+        cancelCurrentSelectedVideo()
         renderSelectedVideoBox()
         // reset thumnail 
-        renderThumnail({ timeId: getTimeId() })
+        renderThumnail({ timeId: getCurrentTimeId() })
     })
 }
 
-// render initial selected videos
-function initThumnail() {
-    document.querySelectorAll('[data-selected-video]').forEach(el => {
-        const video = findVideo(el.dataset.selectedVideo)
-        if (!video) return 
-        const imgEl = el.querySelector('img')
-        imgEl.setAttribute(`data-video`, JSON.stringify(video))
-        imgEl.src = video.path
-    })
-}
 
 
 /************************************
   selected video
 *************************************/
+// videoId = null -> it's rermoved  (see cancelCurrentSelectedVideo())
 const selectedVideos = []
-
-function initSelectedVideos() {
-    document.querySelectorAll('[data-selected-video]').forEach(el => {
-        if (!el.dataset.selectedVideo) return
-
-        selectedVideos.push({
-            timeId: el.dataset.timeId,
-            videoId: el.dataset.selectedVideo
-        })
-    })
-}
 
 const findSelectedVideoId = (timeId) => {
     const selectedVideo = selectedVideos.find(v => v.timeId === timeId)
     return selectedVideo ? selectedVideo.videoId : null
 }
 
-const findCurrentSelectedVideoId = () => findSelectedVideoId(getTimeId())
+const findCurrentSelectedVideoId = () => findSelectedVideoId(getCurrentTimeId())
 
 
-const createSelectedVideo = (videoId) => {
-    const timeId = getTimeId()
+const storeSelectedVideo = (videoId) => {
+    const timeId = getCurrentTimeId()
     if (!timeId || !videoId) return 
     
-    selectedVideos.push({ timeId, videoId })
+    const selectedVideo = selectedVideos.find(v => v.timeId === timeId)
+    if (selectedVideo) {
+        selectedVideo.videoId = videoId
+    } else {
+        selectedVideos.push({ timeId, videoId })
+    }
+       
 }
 
-const removeSelectedVideo = () => {
-    const timeId = getTimeId()
-    const index = selectedVideos.findIndex(v => v.timeId === timeId)
-    if (index > -1) selectedVideos.splice(index, 1)
+// put null into videoID 
+const cancelCurrentSelectedVideo = () => {
+    const selectedVideo = selectedVideos.find(v => v.timeId === getCurrentTimeId())
+    selectedVideo.videoId = null
 }
 
 /************************************
@@ -206,14 +189,14 @@ document.querySelectorAll('.close-modal').forEach(el => {
 *************************************/
 const extractTimeId = (el) => el.dataset.timeId
 
-let timeId
-const setTimeId = (id) => timeId = id
-const getTimeId = () => timeId
+let currentTimeId
+const setCurrentTimeId = (id) => timeId = id
+const getCurrentTimeId = () => timeId
 
 document.querySelectorAll('*[data-time-id]').forEach(el => {
     el.addEventListener('click', (e) => {
         renderVideoOptionModal()
-        setTimeId(extractTimeId(e.target))
+        setCurrentTimeId(extractTimeId(e.target))
         renderSelectedVideoBox()
     })
 })
@@ -222,7 +205,7 @@ document.querySelectorAll('*[data-time-id]').forEach(el => {
 new MutationObserver(mutations => {
     mutations.forEach(mutation => {
         if (mutation.oldValue !== 'open') return 
-        setTimeId('')
+        setCurrentTimeId('')
     })
 }).observe(document.querySelector('#video-option-modal'), { 
     attributes: true,
