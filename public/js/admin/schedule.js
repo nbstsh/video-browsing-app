@@ -64,8 +64,9 @@ const initVideoSelectButtonEvent = () => {
         button.addEventListener('click', (e) => {
             const videoId = e.target.dataset.videoId 
             storeSelectedVideo(videoId)
+            attachVideoIdToCurrentTimeIdEl(videoId)
             renderSelectedVideoBox()
-            renderThumnail(selectedVideos.find(v => v.timeId === getCurrentTimeId()))
+            renderThumnail(selectedVideosUpdate.find(v => v.timeId === getCurrentTimeId()))
         })
     })
 }
@@ -118,6 +119,7 @@ const renderThumnail = ({ timeId, videoId }) => {
 const initCancelVideoEvent = () => {
     document.querySelector('#video-cancel').addEventListener('click', () => {
         cancelCurrentSelectedVideo()
+        detachVideoIdFromCurrentTimeIdEl()
         renderSelectedVideoBox()
         // reset thumnail 
         renderThumnail({ timeId: getCurrentTimeId() })
@@ -130,11 +132,12 @@ const initCancelVideoEvent = () => {
   selected video
 *************************************/
 // videoId = null -> it's rermoved  (see cancelCurrentSelectedVideo())
-const selectedVideos = []
+const selectedVideosUpdate = []
 
 const findSelectedVideoId = (timeId) => {
-    const selectedVideo = selectedVideos.find(v => v.timeId === timeId)
-    return selectedVideo ? selectedVideo.videoId : null
+    // const selectedVideo = selectedVideosUpdate.find(v => v.timeId === timeId)
+    const selectedVideoEl = document.querySelector(`[data-time-id="${timeId}"`)
+    return selectedVideoEl ? selectedVideoEl.dataset.videoId : null
 }
 
 const findCurrentSelectedVideoId = () => findSelectedVideoId(getCurrentTimeId())
@@ -144,19 +147,33 @@ const storeSelectedVideo = (videoId) => {
     const timeId = getCurrentTimeId()
     if (!timeId || !videoId) return 
     
-    const selectedVideo = selectedVideos.find(v => v.timeId === timeId)
+    const selectedVideo = selectedVideosUpdate.find(v => v.timeId === timeId)
     if (selectedVideo) {
         selectedVideo.videoId = videoId
     } else {
-        selectedVideos.push({ timeId, videoId })
-    }
-       
+        selectedVideosUpdate.push({ timeId, videoId })
+    }      
+}
+
+const attachVideoIdToCurrentTimeIdEl = (videoId) => {
+    const el = document.querySelector(`[data-time-id="${getCurrentTimeId()}"]`)
+    el.dataset.videoId = videoId
+}
+
+const detachVideoIdFromCurrentTimeIdEl = () => {
+    const el = document.querySelector(`[data-time-id="${getCurrentTimeId()}"]`)
+    el.dataset.videoId = ''
 }
 
 // put null into videoID 
 const cancelCurrentSelectedVideo = () => {
-    const selectedVideo = selectedVideos.find(v => v.timeId === getCurrentTimeId())
-    selectedVideo.videoId = null
+    const timeId = getCurrentTimeId()
+    const selectedVideo = selectedVideosUpdate.find(v => v.timeId === timeId)
+    if (selectedVideo) {
+        selectedVideo.videoId = null
+    } else {
+        selectedVideosUpdate.push({ timeId, videoId: null })
+    }
 }
 
 /************************************
@@ -221,7 +238,7 @@ new MutationObserver(mutations => {
 document.querySelector('#schedule-form').addEventListener('submit', (e) => {
     e.preventDefault()
     const inputEl = e.target.children.selectedVideos
-    inputEl.value = JSON.stringify(selectedVideos)
+    inputEl.value = JSON.stringify(selectedVideosUpdate)
     console.log(inputEl.value)
 
     e.target.submit()
