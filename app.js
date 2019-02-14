@@ -1,4 +1,4 @@
-
+const methodOverride = require('method-override')
 const debugStartup = require('debug')('app:startup')
 const debugData = require('debug')('app:data')
 const debugError = require('debug')('app:error')
@@ -42,6 +42,7 @@ mongoose.connect(`mongodb://${config.get('db.host')}:${config.get('db.port')}/${
 app.use(express.json())
 app.use(express.urlencoded( { extended: true }))
 app.use(express.static(path.join(__dirname + '/public')))
+app.use(methodOverride('_method'))
 
 if (app.get('env') === 'development') {
     app.use(morgan('tiny'))

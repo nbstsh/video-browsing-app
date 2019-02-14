@@ -11,5 +11,8 @@ block content
   br
   a(href='/admin/videos') back to list
 
+  form(action=`/admin/videos/${video._id}?_method=DELETE` method="POST")
+    button(type="submit") delete
+
 block script 
 

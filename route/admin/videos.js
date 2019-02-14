@@ -65,6 +65,19 @@ router.post('/', async (req, res) => {
     res.redirect(`videos/${video._id}`)
 })
 
+router.delete('/:id', async (req, res) => {
+    const video = Video.findByIdAndRemove(req.params.id).catch((e) => {
+        // TODO error handling
+        res.redirect('./')
+    })
+    if (!video) {
+        debugError(error)
+        // TODO error handling, show error message
+        res.redirect('./')
+    }
+    res.redirect('./')
+})
+
 function emptyVideoProps(video) {
     for(let key in video) {
         if (!video[key]) delete video[key]
