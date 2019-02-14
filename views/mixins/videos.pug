@@ -4,5 +4,11 @@ mixin videoList(videos)
     each video in videos
       li
         a(href=`/admin/videos/${video._id}`)
-          each val, prop in video
-            p #{prop} : #{val}
+          //- each val, prop in video
+          //-   p #{prop} : #{val}
+          +video(video)
+
+mixin video(video)
+  .video
+    each val, prop in video
+      p #{prop} : #{val}
