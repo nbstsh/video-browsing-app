@@ -7,6 +7,9 @@ block content
   include ../../mixins/videos 
   
   +video(video)
+  a(href=`/admin/videos/${video._id}/edit`) edit
+  br
+  a(href='/admin/videos') back to list
 
 block script 
 

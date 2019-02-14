@@ -11,33 +11,14 @@ block content
   //-   each val, key in formValues
   //-     p #{key}: #{val}
 
+  //- TODO: 新規作成formも更新のformに関しても同じformを使用したい。現状はvideoの有無に応じて使い分けをしているが苦肉の策
+  //- TODO: redirectして飛んできたとに元の req.bodyの値を保持して表示させる
+
   h1 create new video 
-  form(action="/admin/videos" method="POST")
-    .form-group
-      h2 video type
-      input(type="radio" name="type" value="youtube" id="youtube-type")
-      label(for="youtube-type") youtube
-      input(type="radio" name="type" value="googledrive" id="google-type")
-      label(for="google-type") googel drive
-
-    .form-group
-      label(for="videoId") video id
-      input(type="text" name="videoId" id="videoId")
-
-    .form-group
-      lable(for="path") video path
-      input(type="text" name="path" id="path")
-
-    .form-group
-      label(for="title") video title
-      input(type="text" name="title" id="title")
-
-    .form-group
-      label(for="description") video description
-      textarea(name="description" id="description" cols="30" rows="10")
-
-    .form-group
-      button(type="submit") submit
+  if video 
+    +formEdit(video)
+  else
+    +formNew()
     
 
 block script 

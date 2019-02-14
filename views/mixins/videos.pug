@@ -12,3 +12,61 @@ mixin video(video)
   .video
     each val, prop in video
       p #{prop} : #{val}
+
+mixin formNew()
+  form(action="/admin/videos" method="POST")
+    .form-group
+      h2 video type
+      input(type="radio" name="type" value="youtube" id="youtube-type")
+      label(for="youtube-type") youtube
+      input(type="radio" name="type" value="googledrive" id="google-type")
+      label(for="google-type") googel drive
+
+    .form-group
+      label(for="videoId") video id
+      input(type="text" name="videoId" id="videoId")
+
+    .form-group
+      lable(for="path") video path
+      input(type="text" name="path" id="path")
+
+    .form-group
+      label(for="title") video title
+      input(type="text" name="title" id="title")
+
+    .form-group
+      label(for="description") video description
+      textarea(name="description" id="description" cols="30" rows="10")
+
+    .form-group
+      button(type="submit") submit
+
+
+mixin formEdit(video)
+  form(action="/admin/videos" method="POST")
+    .form-group
+      h2 video type
+      input(type="radio" name="type" value="youtube" id="youtube-type" checked=video.type==='youtube')
+      label(for="youtube-type") youtube
+      input(type="radio" name="type" value="googledrive" id="google-type" checked=video.type==='googledrive')
+      label(for="google-type") googel drive
+
+    .form-group
+      label(for="videoId") video id
+      input(type="text" name="videoId" id="videoId" value=video.videoId)
+
+    .form-group
+      lable(for="path") video path
+      input(type="text" name="path" id="path" value=video.path)
+
+    .form-group
+      label(for="title") video title
+      input(type="text" name="title" id="title" value=video.title)
+
+    .form-group
+      label(for="description") video description
+      textarea(name="description" id="description" cols="30" rows="10") #{video.description}
+
+    .form-group
+      button(type="submit") submit
+

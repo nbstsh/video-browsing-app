@@ -33,6 +33,21 @@ router.get('/:id', async (req, res) => {
     res.render('admin/videos/show.pug', { video: _.pick(video, SELECTED_PROPS) })
 })
 
+router.get('/:id/edit', async (req, res) => {
+    const video = await Video.findById(req.params.id).catch((e) => {
+        // TODO error handling
+        res.redirect('./')
+    })
+
+    if (!video) {
+        debugError('No video found')
+        // TODO error handling , show error message
+        res.redirect('./')
+    }
+
+    res.render('admin/videos/form.pug', { video })
+})
+
 router.post('/', async (req, res) => {
     emptyVideoProps(req.body)
     const { error } = validate(req.body)
