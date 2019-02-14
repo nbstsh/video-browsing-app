@@ -5,11 +5,14 @@ const router = express.Router()
 
 const { resetScheduleData, generateDummyVideos } = require('../../models/dummy')
 const { getSelectedSchedules } = require('../../models/schedule')
-const { Video, getVideos, validate } = require('../../models/video')
+const { Video, validate } = require('../../models/video')
 
-// T0DO create pug
-router.get('/', (req, res) => {
-    res.redirect('/admin/form.html')
+
+router.get('/', async (req, res) => {
+    const selectProps = ['_id', 'videoId', 'type', 'path', 'title', 'description']
+    let videos = await Video.find().select(selectProps)
+    videos = videos.map(v => _.pick(v, selectProps))
+    res.render('admin/videos', { videos })
 })
 
 router.post('/', async (req, res) => {

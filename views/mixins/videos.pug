@@ -1,0 +1,8 @@
+
+mixin videoList(videos) 
+  ul
+    each video in videos
+      li
+        a(href=`/admin/videos/${video._id}`)
+          each val, prop in video
+            p #{prop} : #{val}

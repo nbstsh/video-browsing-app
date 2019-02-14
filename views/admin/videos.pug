@@ -1,0 +1,15 @@
+extends ../layout/main.pug
+
+block head 
+  title videos
+
+block content 
+  include ../mixins/videos
+
+  main.section-admin-videos
+    h1 video list
+    +videoList(videos)
+    
+
+block script 
+
