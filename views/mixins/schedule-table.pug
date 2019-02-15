@@ -2,6 +2,7 @@
 //- create tr element to show time
 mixin timeList(times)
   tr.program__time-list
+    td.program__time-item day
     each time in times
       td.program__time-item #{time}
 
@@ -9,6 +10,7 @@ mixin timeList(times)
 mixin scheduleTable(days, attrs)
   each dayObj in days
     tr.program__week(class=dayObj.day)
+      td= dayObj.day
       each time in dayObj.times
         if time.video
           - const { _id, path, title, description } = time.video
