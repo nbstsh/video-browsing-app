@@ -15,7 +15,12 @@ function generateTimeList(times) {
 
 function validateSelectedVideos(selectedVideos) {
     for(let v of selectedVideos) {
-        const isValid = ObjectId.isValid(v.timeId) && ObjectId.isValid(v.videoId)
+        console.log("===============")
+        console.log(v)
+        console.log("===============")
+        const isValid = ObjectId.isValid(v.timeId) && (ObjectId.isValid(v.videoId) || v.videoId === null)
+        console.log('isValid timeId', ObjectId.isValid(v.timeId))
+        console.log('isValid videoId', ObjectId.isValid(v.videoId))
         if (!isValid) return false
     }
     return true
@@ -23,7 +28,6 @@ function validateSelectedVideos(selectedVideos) {
 
 // find time object with given _id inside schedule document
 function findTimeObj({ days }, timeId) {
-    console.log(timeId)
     for(let day of days) {
         for(let timeObj of day.times) {
             if (timeObj._id.toString() === timeId) return timeObj
@@ -47,10 +51,10 @@ exports.show = async (req, res) => {
 *************************/
 exports.create = async (req, res) => {
     const selectedVideos = JSON.parse(req.body.selectedVideos)
-    if (validateSelectedVideos(selectedVideos)){
+    if (!validateSelectedVideos(selectedVideos)){
         // TODO : error handling
         debugError('Invalid selectedVideos')
-        res.redirect('/admin/schedules')
+        return res.redirect('/admin/schedules')
     }
 
     const schedule = await findSelectedSchedule()
