@@ -54,7 +54,7 @@ const generateVideoSelectButtonEl = (videoId) => {
     const buttonEl = document.createElement('button')
     buttonEl.textContent = 'select'
     buttonEl.classList.add('video-select')
-    buttonEl.dataset.videoId = videoId
+    buttonEl.dataset.videoObjectId = videoId
     return buttonEl
 }
 
@@ -62,7 +62,7 @@ const generateVideoSelectButtonEl = (videoId) => {
 const initVideoSelectButtonEvent = () => {
     document.querySelectorAll('.video-select').forEach(button => {
         button.addEventListener('click', (e) => {
-            const videoId = e.target.dataset.videoId 
+            const videoId = e.target.dataset.videoObjectId 
             storeSelectedVideo(videoId)
             attachVideoIdToCurrentTimeIdEl(videoId)
             renderSelectedVideoBox()
@@ -137,7 +137,7 @@ const selectedVideosUpdate = []
 const findSelectedVideoId = (timeId) => {
     // const selectedVideo = selectedVideosUpdate.find(v => v.timeId === timeId)
     const selectedVideoEl = document.querySelector(`[data-time-id="${timeId}"`)
-    return selectedVideoEl ? selectedVideoEl.dataset.videoId : null
+    return selectedVideoEl ? selectedVideoEl.dataset.videoObjectId : null
 }
 
 const findCurrentSelectedVideoId = () => findSelectedVideoId(getCurrentTimeId())
@@ -157,12 +157,12 @@ const storeSelectedVideo = (videoId) => {
 
 const attachVideoIdToCurrentTimeIdEl = (videoId) => {
     const el = document.querySelector(`[data-time-id="${getCurrentTimeId()}"]`)
-    el.dataset.videoId = videoId
+    el.dataset.videoObjectId = videoId
 }
 
 const detachVideoIdFromCurrentTimeIdEl = () => {
     const el = document.querySelector(`[data-time-id="${getCurrentTimeId()}"]`)
-    el.dataset.videoId = ''
+    el.dataset.videoObjectId = ''
 }
 
 // put null into videoID 

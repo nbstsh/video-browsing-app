@@ -13,8 +13,15 @@ mixin scheduleTable(days, attrs)
       td= dayObj.day
       each time in dayObj.times
         if time.video
-          - const { _id, path, title, description } = time.video
-          td.program__thumnail(data-time-id=time.id data-video-id=_id data-title=title data-description=description)&attributes(attrs)
+          - const { _id, path, title, description, type, videoId } = time.video
+          td.program__thumnail(
+            data-time-id=time.id
+            data-video-object-id=_id 
+            data-video-id=videoId
+            data-type=type
+            data-title=title 
+            data-description=description
+          )&attributes(attrs)
             img(src=path)
         else
           td.program__thumnail(data-time-id=time.id)&attributes(attrs)
