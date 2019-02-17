@@ -16,6 +16,7 @@ mixin scheduleTable(days, attrs)
           - const { _id, path, title, description, type, videoId } = time.video
           td.program__thumnail(
             data-time-id=time.id
+            data-time=time.time
             data-video-object-id=_id 
             data-video-id=videoId
             data-type=type
@@ -24,6 +25,9 @@ mixin scheduleTable(days, attrs)
           )&attributes(attrs)
             img(src=path)
         else
-          td.program__thumnail(data-time-id=time.id)&attributes(attrs)
+          td.program__thumnail(
+            data-time-id=time.id
+            data-time=time.time
+          )&attributes(attrs)
             img
   

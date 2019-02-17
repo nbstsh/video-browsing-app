@@ -15,12 +15,7 @@ function generateTimeList(times) {
 
 function validateSelectedVideos(selectedVideos) {
     for(let v of selectedVideos) {
-        console.log("===============")
-        console.log(v)
-        console.log("===============")
         const isValid = ObjectId.isValid(v.timeId) && (ObjectId.isValid(v.videoId) || v.videoId === null)
-        console.log('isValid timeId', ObjectId.isValid(v.timeId))
-        console.log('isValid videoId', ObjectId.isValid(v.videoId))
         if (!isValid) return false
     }
     return true

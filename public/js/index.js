@@ -1,3 +1,4 @@
+// import moment from 'moment'
 const VIDEO_ELEMENT_ID = 'video'
 const VIDEO_BOX_ELEMENT_ID = 'video-box' 
 const SOURCE_ELEMENT_ID = 'source'
@@ -59,8 +60,8 @@ class VideoManager {
 }
 
 
-const videoManager = new VideoManager()
 
+const videoManager = new VideoManager()
 
 document.querySelectorAll('[data-video-id][data-type]').forEach(el => {
     el.addEventListener('click', (e) => {
@@ -71,4 +72,38 @@ document.querySelectorAll('[data-video-id][data-type]').forEach(el => {
         videoManager.withVideo(videoData).render()
     })
 })
+
+
+/*********************
+  render vidoe box    
+*********************/
+function findCurrentElement() {
+    // TODO : delete dummy data and get current time
+    // const currentTime = moment().format('HHmm')
+    const currentTime = 10
+    const dayEls = document.querySelector('.program__week').childNodes
+    let targetDayEl
+    dayEls.forEach(el => {
+        if (el.dataset.time && Number(el.dataset.time) > currentTime) return 
+        targetDayEl =  el
+    })
+    return targetDayEl
+}
+
+function renderCurrentVideo() {
+    const currentEl = findCurrentElement()
+    if (!currentEl.dataset.videoId || !currentEl.dataset.type) return 
+
+    const videoData =  {
+        videoId: currentEl.dataset.videoId,
+        type: currentEl.dataset.type
+    }
+    videoManager.withVideo(videoData).render()
+}
+
+
+
+function onYouTubeIframeAPIReady() {
+    renderCurrentVideo()
+}
 
