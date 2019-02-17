@@ -78,8 +78,9 @@ document.querySelectorAll('[data-video-id][data-type]').forEach(el => {
 *********************/
 function findCurrentElement() {
     // TODO : delete dummy data and get current time
-    // const currentTime = moment().format('HHmm')
-    const currentTime = 10
+    const currentTime = Number(moment().format('HHmm'))
+    console.log(currentTime)
+
     const dayEls = document.querySelector('.program__week').childNodes
     let targetDayEl
     dayEls.forEach(el => {
@@ -99,7 +100,6 @@ function renderCurrentVideo() {
     }
     videoManager.withVideo(videoData).render()
 }
-
 
 // implemented when finish laoding youtube iframe api
 function onYouTubeIframeAPIReady() {
