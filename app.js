@@ -10,6 +10,7 @@ const moment = require('moment')
 const mongoose = require('mongoose')
 const home = require('./route/home')
 const apiVideo = require('./route/api/videos')
+const apiUser = require('./route/api/user')
 const adminSchedule = require('./route/admin/schedules')
 const adminVideo = require('./route/admin/videos')
 const express = require('express')
@@ -55,6 +56,7 @@ app.use('/', home)
 app.use('/admin/schedules', adminSchedule)
 app.use('/admin/videos', adminVideo)
 app.use('/api/videos', apiVideo)
+app.use('/api/users', apiUser)
 
 
 
