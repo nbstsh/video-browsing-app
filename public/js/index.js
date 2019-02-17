@@ -1,8 +1,7 @@
-// import moment from 'moment'
+import moment from 'moment'
 const VIDEO_ELEMENT_ID = 'video'
 const VIDEO_BOX_ELEMENT_ID = 'video-box' 
 const SOURCE_ELEMENT_ID = 'source'
-
 
 // TODO : set width and height of video element
 
@@ -102,7 +101,7 @@ function renderCurrentVideo() {
 }
 
 
-
+// implemented when finish laoding youtube iframe api
 function onYouTubeIframeAPIReady() {
     renderCurrentVideo()
 }

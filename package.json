@@ -4,11 +4,20 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "compile:sass": "node-sass ./sass/main.scss ./public/css/style.css -w"
+    "compile:sass": "node-sass ./sass/main.scss ./public/css/style.css -w",
+    "build": "webpack --mode production -w"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.2.3",
+    "babel-loader": "^8.0.4",
+    "npm-run-all": "^4.1.5",
+    "webpack": "^4.28.3",
+    "webpack-cli": "^3.1.2"
+  },
   "dependencies": {
     "config": "^3.0.1",
     "debug": "^4.1.1",
