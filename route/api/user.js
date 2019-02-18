@@ -3,8 +3,10 @@ const router = express.Router()
 const { User, validate } = require('../../models/user')
 const _ = require('lodash')
 const bcrypt = require('bcrypt')
+const auth = require('../../middleware/auth')
+const admin = require('../../middleware/admin')
 
-router.post('/', async (req, res) => {
+router.post('/', [auth, admin], async (req, res) => {
     const { error } = validate(req.body)
     if (error) res.status(400).send(error.details[0].message)
 

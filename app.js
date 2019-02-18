@@ -18,6 +18,11 @@ const app = express()
 
 const { initDummy } = require('./models/dummy')
 
+if(!config.get('jwtPrivateKey')) {
+    console.log('Could not get jwtPrivateKey')
+    process.exit(1)
+}
+
 /******************************************
     set
 ******************************************/
