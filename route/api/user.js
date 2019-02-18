@@ -16,6 +16,8 @@ router.post('/', async (req, res) => {
     user.password = await bcrypt.hash(user.password, salt)
     await user.save()
 
+    res.header('x-auth-token', user.generateAuthToken())
+
     res.send(_.pick(user, ['name', 'email', 'isAdmin']))
 })
 
