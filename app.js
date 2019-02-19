@@ -13,8 +13,11 @@ const apiVideo = require('./route/api/videos')
 const apiUser = require('./route/api/user')
 const adminSchedule = require('./route/admin/schedules')
 const adminVideo = require('./route/admin/videos')
+const login = require('./route/login')
 const express = require('express')
 const app = express()
+const auth = require('./middleware/auth')
+const admin = require('./middleware/admin')
 
 const { initDummy } = require('./models/dummy')
 
@@ -35,6 +38,7 @@ mongoose.connect(`mongodb://${config.get('db.host')}:${config.get('db.port')}/${
     .then(() => debugStartup('Connected to db ....'))
     .catch(err => debugStartup('Failed to connect to db ....', err))
 
+mongoose.set('useCreateIndex', true)
 
 /******************************************
     dummy 
@@ -49,6 +53,7 @@ app.use(express.json())
 app.use(express.urlencoded( { extended: true }))
 app.use(express.static(path.join(__dirname + '/public')))
 app.use(methodOverride('_method'))
+app.use('/admin\/*', [auth, admin])
 
 if (app.get('env') === 'development') {
     app.use(morgan('tiny'))
@@ -58,6 +63,7 @@ if (app.get('env') === 'development') {
     Route
 ******************************************/ 
 app.use('/', home)
+app.use('/login', login)
 app.use('/admin/schedules', adminSchedule)
 app.use('/admin/videos', adminVideo)
 app.use('/api/videos', apiVideo)
