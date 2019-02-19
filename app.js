@@ -1,3 +1,4 @@
+const cookieParser = require('cookie-parser')
 const methodOverride = require('method-override')
 const debugStartup = require('debug')('app:startup')
 const debugData = require('debug')('app:data')
@@ -52,6 +53,7 @@ mongoose.set('useCreateIndex', true)
 app.use(express.json())
 app.use(express.urlencoded( { extended: true }))
 app.use(express.static(path.join(__dirname + '/public')))
+app.use(cookieParser())
 app.use(methodOverride('_method'))
 app.use('/admin\/*', [auth, admin])
 

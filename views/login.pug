@@ -7,7 +7,9 @@ block head
 block content 
 
   h1 login
-  form(action="" method="POST")
+  form(action="/login" method="POST")
+    if errorMessage
+      p= errorMessage
     input(type="text" name="email" placeholder="email")
     input(type="password" name="password" placeholder="password")
     button(type="submit") submit
