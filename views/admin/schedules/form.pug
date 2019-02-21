@@ -1,0 +1,20 @@
+extends ../../layout/main.pug
+
+block head 
+  title schedule form
+
+block content 
+
+  h1 schedule form
+  form(action="/admin/schedules" method="POST")
+    if errorMessage
+      p= errorMessage
+    input(type="number" name="duration" max="1440" min="1" placeholder="program duration")
+    button(type="submit") submit
+  
+  div
+    a(href="/admin/schedules")
+      button back
+
+block script 
+

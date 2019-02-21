@@ -5,6 +5,7 @@ const moment = require('moment')
 const { Schedule } = require('./schedule')
 const { SelectedSchedule } = require('./selectedSchedule')
 const { Video } = require('./video')
+const { generateDays } = require('./helper')
 
 /******************************************
     dummy schedule data
@@ -34,21 +35,6 @@ async function initDummySchedule() {
     return schedule
 }
 
-
-// generate schedule documents( mon ~ sun / given time schedule)
-function generateDays(duration) { 
-    let days = []
-    Object.values(config.get('schedule.dayId')).forEach((dayId) => {
-        const times = []
-        for(let minute = 0; minute < 1440; minute+=duration) {
-            times.push({
-                time: moment().minute(minute).format('HHmm')
-            })
-        }
-        days.push({ day: config.get('schedule.day')[dayId], times })
-    }) 
-    return days
-}
 
 /******************************************
     dummy video data

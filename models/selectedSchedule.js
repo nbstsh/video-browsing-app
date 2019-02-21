@@ -11,7 +11,7 @@ const selectedScheduleSchema = new mongoose.Schema({
     },
     duration: {
         type: Number,
-        min: 1,
+        min: 5,
         max: 1440, // 24 * 60 min
         required: true
     },
@@ -31,7 +31,8 @@ const selectedScheduleSchema = new mongoose.Schema({
                         callback(count === 0)
                     })
             }
-        }
+        },
+        default: false
     }
 })
 
@@ -40,12 +41,11 @@ const SelectedSchedule = mongoose.model('SelectedSchedule', selectedScheduleSche
 
 function validateSelectedSchedule(selectedSchedule){
     const schema = {
-        scheduleId: Joi.objectId().required(),
-        duration: Joi.number().min(1).max(2400).required(),
-        isSelected: Joi.boolean().required()
+        duration: Joi.number().min(5).max(1440).required()
     }
     return Joi.validate(selectedSchedule, schema)
 }
 
 
 exports.SelectedSchedule = SelectedSchedule
+exports.validateSelectedSchedule = validateSelectedSchedule

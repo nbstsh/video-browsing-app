@@ -17,7 +17,7 @@ block content
             'class':  'open-modal',
             'data-target': '#video-option-modal'
           })
-    form#schedule-form(method="POST")
+    form#schedule-form(method="POST" action=`/admin/schedules/${scheduleId}`)
       input(type="hidden" name="selectedVideos")
       button.button  save
 

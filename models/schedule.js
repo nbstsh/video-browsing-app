@@ -23,34 +23,43 @@ const scheduleSchema = new mongoose.Schema({
             },
             video: videoSchema
         }]
-    } ] 
+    } ],
+    duration: {
+        type: Number,
+        min: 5,
+        max: 1440, // 24 * 60 min
+        required: true
+    },
+    selected: {
+        type: Boolean,
+        required: true,
+        validate: {
+            isAsync: true,
+            validator: function(v, callback) {
+                // 'false' is always valid
+                if (!v) return callback(true)
+                // check if there is another true
+                SelectedSchedule
+                    .find({ selected: true })
+                    .countDocuments()
+                    .exec((err, count) => {
+                        callback(count === 0)
+                    })
+            }
+        },
+        default: false
+    } 
 })
 
 const Schedule = mongoose.model('Schedule', scheduleSchema)
 
-
-/* TODO : validationどうするか考える (inputがどのようなデータ構造なのかによる)
- 
-function validateSchedule(schedule) {
-    for(let dayObj of schedule.days) {
-        const dayValidation = valiateDay(schedule.day)
-        if (dayValidation.error) return dayValidation 
-        
-        const timesValidation = validate
-
-    }
-
-    
-}
-
-function validateDay(day) {
+function validateSchedule(selectedSchedule){
     const schema = {
-        day: Joi.string().valid(Object.values(config.get('schedule.day'))).required()
+        duration: Joi.number().min(5).max(1440).required()
     }
-    return Joi.validate(day, schema)
+    return Joi.validate(selectedSchedule, schema)
 }
 
-*/
 
 exports.Schedule = Schedule
-// exports.validate = validateSchedule
+exports.validateSchedule = validateSchedule

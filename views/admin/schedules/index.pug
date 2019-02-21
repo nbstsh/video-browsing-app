@@ -1,0 +1,23 @@
+extends ../../layout/main.pug
+
+block head 
+  title schedule list
+
+block content 
+
+  h1 schedule list
+  ul 
+    each schedule in schedules
+      li
+        a(href=`/admin/schedules/${schedule._id}`)
+          p id : #{schedule._id}
+          p duration : #{schedule.duration}
+          p selected : #{schedule.selected}
+  
+  div
+    a(href="/admin/schedules/new")
+      button create new 
+      
+
+block script 
+
