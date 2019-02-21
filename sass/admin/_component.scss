@@ -2,6 +2,53 @@
 /************************
  common
 *************************/
+.nav {
+
+    border: 1px solid blue;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 2em 1rem 2.5rem;
+    background-color: var(--color-grey-dark-1);
+    color: var(--color-grey-light-1);
+ 
+    &__title {
+        // border: 1px solid red;
+    }
+
+    &__list {
+        // border: 1px solid yellow;
+        display: flex;
+        border: 1px solid var(--color-grey-light-4);
+        border-radius: 2px;
+    }
+
+    &__item {
+        // border: 1px solid black;
+        display: block;
+        width: 10rem;
+        padding: 1rem;
+        text-align: center;
+        cursor: pointer;
+        transition: all .2s;
+
+        &:not(:last-child) {
+            // border-right: 1px solid var(--color-grey-light-4);
+        }
+
+        &.selected{
+            color: var(--color-grey-dark-1);
+            background-color: var(--color-grey-light-3);
+        } 
+
+        &:hover {
+            color: var(--color-grey-dark-1);
+            background-color: var(--color-grey-light-3);
+        }
+    }
+}
+
+
 .btn {
     height: 3.5rem;
     width: 10rem;
@@ -36,7 +83,6 @@
 .error {
     color: $color-error;
 }
-
 
 
 

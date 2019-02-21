@@ -39,3 +39,10 @@ body {
 ul {
     list-style: none;
 }
+
+a,
+a:link,
+a:visited{
+    text-decoration: none;
+    color: inherit;
+}
