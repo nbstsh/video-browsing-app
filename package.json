@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "compile:sass": "node-sass ./sass/main.scss ./public/css/style.css -w",
+    "compile:sass-admin": "node-sass ./sass/admin/main.scss ./public/css/admin.css -w",
     "build": "webpack --mode development -w",
     "start": "npm-run-all --parallel compile:sass build"
   },
