@@ -1,18 +1,19 @@
-extends layout/admin
+extends layout/main
 
 block head 
-
+  link(rel="stylesheet", href="/css/admin.css")
   title login
 
 block content 
-
-  h1 login
-  form(action="/login" method="POST")
-    if errorMessage
-      p= errorMessage
-    input(type="text" name="email" placeholder="email")
-    input(type="password" name="password" placeholder="password")
-    button(type="submit") submit
+  .login
+    .login__box 
+      h1.login__title login
+      form.login__form(action="/login" method="POST")
+        if errorMessage
+          p.error.login__error= errorMessage
+        input.input.login__input(type="text" name="email" placeholder="email")
+        input.input.login__input(type="password" name="password" placeholder="password")
+        button.btn.login__btn(type="submit") submit
 
 block script 
   script(src="https://www.youtube.com/iframe_api")
