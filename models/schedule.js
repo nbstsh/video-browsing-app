@@ -9,6 +9,12 @@ const { videoSchema } = require('./video')
     schedule collectins
 ******************************************/
 const scheduleSchema = new mongoose.Schema({
+    title: {
+        type: String,
+        required: true,
+        min: 1,
+        max: 50
+    },
     days: [ {
         day: {
             type: String,
@@ -39,7 +45,7 @@ const scheduleSchema = new mongoose.Schema({
                 // 'false' is always valid
                 if (!v) return callback(true)
                 // check if there is another true
-                SelectedSchedule
+                Schedule
                     .find({ selected: true })
                     .countDocuments()
                     .exec((err, count) => {
@@ -55,6 +61,7 @@ const Schedule = mongoose.model('Schedule', scheduleSchema)
 
 function validateSchedule(selectedSchedule){
     const schema = {
+        title: Joi.string().min(1).max(50).required(),
         duration: Joi.number().min(5).max(1440).required()
     }
     return Joi.validate(selectedSchedule, schema)

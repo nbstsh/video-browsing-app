@@ -6,11 +6,19 @@ block head
 block content 
 
   h1 schedule list
+
+  form(action="/admin/schedules/selected" method="POST")
+    select(name="selectedId")
+      each schedule in schedules
+        option(value=schedule._id)= schedule.title
+    button(type="submit") save
+
   ul 
     each schedule in schedules
       li
         a(href=`/admin/schedules/${schedule._id}`)
           p id : #{schedule._id}
+          p title : #{schedule.title}
           p duration : #{schedule.duration}
           p selected : #{schedule.selected}
   

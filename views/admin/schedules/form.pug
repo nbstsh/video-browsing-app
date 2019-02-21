@@ -9,6 +9,7 @@ block content
   form(action="/admin/schedules" method="POST")
     if errorMessage
       p= errorMessage
+    input(type="text" name="title" placeholder="title")
     input(type="number" name="duration" max="1440" min="1" placeholder="program duration")
     button(type="submit") submit
   

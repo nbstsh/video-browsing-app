@@ -1,3 +1,5 @@
+const Joi = require('joi')
+Joi.objectId = require('joi-objectid')(Joi)
 const _ = require('lodash')
 const debugError = require('debug')('app:error')
 const debugData = require('debug')('app:data')
@@ -5,6 +7,10 @@ const ObjectId = require('mongoose').Types.ObjectId
 const { Video } = require('../models/video')
 const { Schedule, validateSchedule } = require('../models/schedule')
 const { generateDays } = require('../models/helper')
+const mongoose = require('mongoose')
+const Fawn = require('fawn')
+Fawn.init(mongoose)
+
 
 // to create ul element to display time schedule
 function generateTimeList(times) {
@@ -32,6 +38,14 @@ function findTimeObj({ days }, timeId) {
     return null
 }
 
+function validateSelected(input) {
+    const schema = {
+        selectedId: Joi.objectId().required()
+    }
+
+    return Joi.validate(input, schema)
+}
+
 
 /************************
 * get /
@@ -57,7 +71,8 @@ exports.create = async (req, res) => {
         res.render('admin/schedules/form', { errorMessage: error.details[0].message})
     }
 
-    const schedule = new Schedule({ 
+    const schedule = new Schedule({
+        title: req.body.title,
         days: generateDays(Number(req.body.duration)),
         duration: req.body.duration,
     })
@@ -117,3 +132,25 @@ exports.update = async (req, res) => {
     res.send(schedule)
 }
 
+
+/************************
+* post /selected
+*************************/
+module.exports.selected = async (req, res) => {
+    const { error } = validateSelected(req.body)
+    if (error) {
+        return res.redirect('/admin/schedules')
+    }
+    
+    const task = Fawn.Task()
+    await task
+        .update("schedules", { selected: true }, { selected: false })
+        .update("schedules", {_id: req.body.selectedId }, { selected: true })
+        .run({ useMongoose: true })
+        .catch((err) => {
+            // TODO : error handling
+            console.log(err)
+        })
+
+    res.redirect('/admin/schedules')
+}
