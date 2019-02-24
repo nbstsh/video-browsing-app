@@ -1,6 +1,5 @@
 
 .nav {
-
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -41,6 +40,43 @@
             color: var(--color-grey-dark-1);
             background-color: var(--color-grey-light-3);
         }
+    }
+}
+
+.page-top {
+    // TEST
+    // border: 1px solid red;
+
+    $page-top-height: 7rem;
+    height: $page-top-height;
+    display: flex;
+    align-items: center;
+    padding: 0 3rem;
+    border-bottom: 1px solid var(--color-grey-dark-1);
+
+    &__icon {
+        // TEST
+        // border: 1px solid blue;
+
+        height: calc(#{$page-top-height} * .6);
+        width: calc(#{$page-top-height} * .6);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 100rem;
+        background-color: var(--color-grey-dark-2);
+        color: #fff;
+    }
+
+    &__title {
+        // TEST
+        // border: 1px solid yellow;
+
+        display: flex;
+        align-items: center;
+        padding-left: 1.5rem;
+        font-weight: normal;
+        font-size: 3rem;
     }
 }
 
