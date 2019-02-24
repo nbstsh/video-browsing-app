@@ -5,7 +5,17 @@ block head
 
 block content 
 
-  h1 schedule list
+  .selected-schedule
+    h2.selected-schedule__title seleced schedule
+    span.selected-schedule__change-icon c
+    .selected-schedule__box
+      ul.selected-schedule__list
+        li.selected-schedule__item
+          span.selected-schedule__item-label title
+          span.selected-schedule__item-content sample
+        li.selected-schedule__item
+          span.selected-schedule__item-label duration
+          span.selected-schedule__item-content 50
 
   form(action="/admin/schedules/selected" method="POST")
     select(name="selectedId")

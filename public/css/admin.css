@@ -148,3 +148,48 @@ a:visited {
     height: 5rem;
     width: 50%;
     margin-top: 2rem; }
+
+.selected-schedule {
+  border: 1px solid var(--color-grey-light-4);
+  padding: 2rem 4rem;
+  max-width: 50rem;
+  margin: 5rem auto;
+  position: relative; }
+  .selected-schedule__title {
+    font-size: 2rem;
+    font-weight: lighter;
+    padding: .5rem 1rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--color-grey-dark-1); }
+  .selected-schedule__change-icon {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 10rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid var(--color-grey-light-4);
+    transition: all .2x; }
+    .selected-schedule__change-icon:hover {
+      background-color: var(--color-grey-light-4);
+      color: var(--color-grey-light-1); }
+  .selected-schedule__box {
+    margin-bottom: 2rem;
+    padding: 0 1rem; }
+  .selected-schedule__item {
+    display: grid;
+    grid-template-columns: 10rem auto; }
+    .selected-schedule__item:not(:last-child) {
+      margin-bottom: 1rem; }
+  .selected-schedule__item-label {
+    background-color: var(--color-grey-dark-1);
+    color: var(--color-grey-light-1);
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center; }
+  .selected-schedule__item-content {
+    text-align: center; }
