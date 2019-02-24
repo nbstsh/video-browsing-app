@@ -40,6 +40,15 @@ a:visited {
   padding: 3rem;
   min-height: 100vh; }
 
+/****************************
+ schedule/index 
+****************************/
+.section-selected-schedule {
+  padding: 5rem 0; }
+
+.section-scheduel-list {
+  padding: 0 1.5rem 2rem 1.5rem; }
+
 .nav {
   display: flex;
   justify-content: space-between;
@@ -153,7 +162,7 @@ a:visited {
   border: 1px solid var(--color-grey-light-4);
   padding: 2rem 4rem;
   max-width: 50rem;
-  margin: 5rem auto;
+  margin: 0 auto;
   position: relative; }
   .selected-schedule__title {
     font-size: 2rem;
@@ -172,7 +181,8 @@ a:visited {
     justify-content: center;
     align-items: center;
     border: 1px solid var(--color-grey-light-4);
-    transition: all .2x; }
+    transition: all .2x;
+    cursor: pointer; }
     .selected-schedule__change-icon:hover {
       background-color: var(--color-grey-light-4);
       color: var(--color-grey-light-1); }
@@ -185,7 +195,7 @@ a:visited {
     .selected-schedule__item:not(:last-child) {
       margin-bottom: 1rem; }
   .selected-schedule__item-label {
-    background-color: var(--color-grey-dark-1);
+    background-color: var(--color-grey-dark-2);
     color: var(--color-grey-light-1);
     border-radius: 3px;
     display: flex;
@@ -193,3 +203,29 @@ a:visited {
     justify-content: center; }
   .selected-schedule__item-content {
     text-align: center; }
+
+.schedule-list {
+  position: relative; }
+  .schedule-list__table {
+    width: 100%;
+    text-align: center; }
+  .schedule-list__head {
+    background-color: var(--color-grey-dark-2);
+    color: var(--color-grey-light-1); }
+    .schedule-list__head td {
+      padding: 1.5rem 1rem; }
+      .schedule-list__head td:nth-of-type(2) {
+        width: 20%; }
+  .schedule-list__list {
+    background-color: var(--color-grey-light-1); }
+    .schedule-list__list td a {
+      padding: 1rem;
+      display: block;
+      width: 100%;
+      height: 100%; }
+  .schedule-list__create-btn {
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 3rem;
+    width: 20em;
+    height: 5rem; }

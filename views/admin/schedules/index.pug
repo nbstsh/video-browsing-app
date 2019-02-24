@@ -5,17 +5,38 @@ block head
 
 block content 
 
-  .selected-schedule
-    h2.selected-schedule__title seleced schedule
-    span.selected-schedule__change-icon c
-    .selected-schedule__box
-      ul.selected-schedule__list
-        li.selected-schedule__item
-          span.selected-schedule__item-label title
-          span.selected-schedule__item-content sample
-        li.selected-schedule__item
-          span.selected-schedule__item-label duration
-          span.selected-schedule__item-content 50
+  .section-selected-schedule 
+    .selected-schedule
+      h2.selected-schedule__title selected schedule
+      span.selected-schedule__change-icon c
+      .selected-schedule__box
+        ul.selected-schedule__list
+          li.selected-schedule__item
+            span.selected-schedule__item-label title
+            span.selected-schedule__item-content= selectedSchedule.title
+          li.selected-schedule__item
+            span.selected-schedule__item-label duration
+            span.selected-schedule__item-content= selectedSchedule.duration
+
+
+  .section-scheduel-list 
+      .schedule-list
+        a(href="/admin/schedules/new")
+          button.btn.schedule-list__create-btn create new schedule
+        table.schedule-list__table
+          thead
+            tr.schedule-list__head
+              td title 
+              td duration
+          tbody
+            each schedule in schedules
+              tr.schedule-list__list
+                  td
+                    a(href=`/admin/schedules/${schedule._id}`)= schedule.title
+                  td= schedule.duration
+
+
+
 
   form(action="/admin/schedules/selected" method="POST")
     select(name="selectedId")
@@ -23,19 +44,6 @@ block content
         option(value=schedule._id)= schedule.title
     button(type="submit") save
 
-  ul 
-    each schedule in schedules
-      li
-        a(href=`/admin/schedules/${schedule._id}`)
-          p id : #{schedule._id}
-          p title : #{schedule.title}
-          p duration : #{schedule.duration}
-          p selected : #{schedule.selected}
-  
-  div
-    a(href="/admin/schedules/new")
-      button create new 
-      
 
 block script 
 

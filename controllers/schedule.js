@@ -52,7 +52,9 @@ function validateSelected(input) {
 *************************/
 exports.show = async (req, res) => {
     const schedules = await Schedule.find()
-    res.render('admin/schedules/index', { schedules })
+    const selectedSchedule = schedules.find(s => s.selected)
+    console.log(selectedSchedule)
+    res.render('admin/schedules/index', { schedules, selectedSchedule })
 }
 
 /************************
