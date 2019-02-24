@@ -2,4 +2,6 @@
 @import '../base';
 @import 'variables';
 @import 'layout';
-@import 'component'
+
+@import 'components/common';
+@import 'components/login';

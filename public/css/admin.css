@@ -34,11 +34,7 @@ a:visited {
   text-decoration: none;
   color: inherit; }
 
-/************************
- common
-*************************/
 .nav {
-  border: 1px solid blue;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -91,9 +87,6 @@ a:visited {
 .error {
   color: #df0808; }
 
-/************************
- login.pug: login form
-*************************/
 .login {
   width: 100vw;
   height: 100vh;
