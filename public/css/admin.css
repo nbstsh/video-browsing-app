@@ -270,6 +270,13 @@ a:visited {
     border-radius: 5px;
     box-shadow: 0 1rem 1.5rem rgba(0, 0, 0, 0.2); }
 
+.create-schedule-modal__header {
+  margin-bottom: 3rem;
+  border-bottom: 2px solid var(--color-grey-dark-3);
+  padding: 1rem 1.5rem;
+  color: var(--color-grey-dark-2);
+  position: relative; }
+
 .create-schedule-modal__form {
   display: flex;
   align-items: center;

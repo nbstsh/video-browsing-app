@@ -53,7 +53,6 @@ function validateSelected(input) {
 exports.show = async (req, res) => {
     const schedules = await Schedule.find()
     const selectedSchedule = schedules.find(s => s.selected)
-    console.log(selectedSchedule)
     res.render('admin/schedules/index', { schedules, selectedSchedule })
 }
 
@@ -63,7 +62,7 @@ exports.show = async (req, res) => {
 exports.create = async (req, res) => {
     const { error } = validateSchedule(req.body)
     if (error) {
-        res.render('admin/schedules/form', { errorMessage: error.details[0].message})
+        return res.redirect('/admin/schedules')
     }
 
     const schedule = new Schedule({

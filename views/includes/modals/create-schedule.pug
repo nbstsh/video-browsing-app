@@ -1,7 +1,8 @@
 .modal.create-schedule-modal(id="create-schedule-modal" data-status="close")
-  .modal__background.close-modal(id="" data-target="#create-schedule-modal")
+  .modal__background.modal__background--dark.close-modal(id="" data-target="#create-schedule-modal")
   .modal__container
     .modal__header 
+      h2.create-schedule-modal__header create new schedule
     .modal__body
       form.create-schedule-modal__form(action="/admin/schedules" method="POST")
         if errorMessage
