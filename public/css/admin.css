@@ -269,3 +269,19 @@ a:visited {
     padding: 3rem 5rem;
     border-radius: 5px;
     box-shadow: 0 1rem 1.5rem rgba(0, 0, 0, 0.2); }
+
+.create-schedule-modal__form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap; }
+
+.create-schedule-modal__label {
+  flex: 0 0 20%; }
+
+.create-schedule-modal__input {
+  flex: 0 0 80%; }
+
+.create-schedule-modal__btn {
+  margin-top: 3rem;
+  width: 15rem; }

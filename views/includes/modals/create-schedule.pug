@@ -1,6 +1,14 @@
-.modal(id="create-schedule-modal" data-status="close")
+.modal.create-schedule-modal(id="create-schedule-modal" data-status="close")
   .modal__background.close-modal(id="" data-target="#create-schedule-modal")
   .modal__container
-    .modal__header header
-    .modal__body body
+    .modal__header 
+    .modal__body
+      form.create-schedule-modal__form(action="/admin/schedules" method="POST")
+        if errorMessage
+          p= errorMessage
+        label.create-schedule-modal__label title
+        input.input.create-schedule-modal__input(type="text" name="title" placeholder="title")
+        lable.create-schedule-modal__label duration
+        input.input.create-schedule-modal__input(type="number" name="duration" max="1440" min="1" placeholder="program duration")
+        button.btn.create-schedule-modal__btn(type="submit") create new schedule
       
