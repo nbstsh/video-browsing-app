@@ -222,7 +222,11 @@ a:visited {
       padding: 1rem;
       display: block;
       width: 100%;
-      height: 100%; }
+      height: 100%;
+      transition: all .2s; }
+      .schedule-list__list td a:hover {
+        background-color: var(--color-grey-light-2);
+        transform: translateY(-5%); }
   .schedule-list__create-btn {
     display: block;
     margin: 0 auto;
@@ -272,10 +276,11 @@ a:visited {
 
 .create-schedule-modal__header {
   margin-bottom: 3rem;
-  border-bottom: 2px solid var(--color-grey-dark-3);
+  border-bottom: 1.5px solid var(--color-grey-dark-3);
   padding: 1rem 1.5rem;
   color: var(--color-grey-dark-2);
-  position: relative; }
+  position: relative;
+  font-weight: normal; }
 
 .create-schedule-modal__form {
   display: flex;
