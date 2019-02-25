@@ -58,13 +58,6 @@ exports.show = async (req, res) => {
 }
 
 /************************
-* get /new
-*************************/
-exports.new = (req, res) => {
-    res.render('admin/schedules/form')
-}
-
-/************************
 * post / 
 *************************/
 exports.create = async (req, res) => {

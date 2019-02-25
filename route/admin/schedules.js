@@ -4,7 +4,6 @@ const router = express.Router()
 
 
 router.get('/', controller.show)
-router.get('/new', controller.new)
 router.post('/', controller.create)
 router.post('/selected', controller.selected)
 router.get('/:id', controller.edit)
