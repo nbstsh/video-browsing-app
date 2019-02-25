@@ -1,10 +1,14 @@
 path = require('path')
 
 module.exports = {
-    entry: './public/js/index.js',
+    entry: {
+        index: './src/index.js',
+        schedule: './src/admin/schedule/index.js',
+        scheduleForm: ['@babel/polyfill', './src/admin/schedule/form.js']
+    }, 
     output: {
-        path: path.resolve(__dirname, 'public/js'),
-        filename: 'bundle.js'
+        path: path.resolve(__dirname, 'public/scripts'), 
+        filename: '[name]-bundle.js'
     },
     module : {
         rules: [{

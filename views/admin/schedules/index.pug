@@ -21,8 +21,9 @@ block content
 
   .section-scheduel-list 
       .schedule-list
-        a(href="/admin/schedules/new")
-          button.btn.schedule-list__create-btn create new schedule
+        //- a(href="/admin/schedules/new")
+        //-   button.btn.schedule-list__create-btn create new schedule
+        button.btn.schedule-list__create-btn.open-modal(data-target='#create-schedule-modal') create new schedule
         table.schedule-list__table
           thead
             tr.schedule-list__head
@@ -35,15 +36,18 @@ block content
                     a(href=`/admin/schedules/${schedule._id}`)= schedule.title
                   td= schedule.duration
 
-
-
-
   form(action="/admin/schedules/selected" method="POST")
     select(name="selectedId")
       each schedule in schedules
         option(value=schedule._id)= schedule.title
     button(type="submit") save
 
+block foot
+
+  include ../../includes/modals/create-schedule
 
 block script 
+
+  script(src="/scripts/schedule-bundle.js")
+
 

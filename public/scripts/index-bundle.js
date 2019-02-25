@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./public/js/index.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/index.js");
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -17724,10 +17724,10 @@ module.exports = function(module) {
 
 /***/ }),
 
-/***/ "./public/js/index.js":
-/*!****************************!*\
-  !*** ./public/js/index.js ***!
-  \****************************/
+/***/ "./src/index.js":
+/*!**********************!*\
+  !*** ./src/index.js ***!
+  \**********************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -17873,4 +17873,4 @@ function onYouTubeIframeAPIReady() {
 /***/ })
 
 /******/ });
-//# sourceMappingURL=bundle.js.map
+//# sourceMappingURL=index-bundle.js.map
