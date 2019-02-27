@@ -1,0 +1,8 @@
+@mixin adminModalHeader {
+    margin-bottom: 3rem;
+    border-bottom: 1.5px solid var(--color-grey-dark-3);
+    padding: 1rem 1.5rem;
+    color: var(--color-grey-dark-2);
+    position: relative;
+    font-weight: normal;
+}

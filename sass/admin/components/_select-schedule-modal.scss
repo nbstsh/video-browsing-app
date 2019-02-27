@@ -1,0 +1,23 @@
+.select-schedule-modal {
+
+    &__header {
+        @include adminModalHeader;
+    }
+
+    &__form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    &__select {
+        width: 80%;
+        height: 5rem;
+        margin-bottom: 3rem;
+        padding-left: 1rem;
+        text-indent: 1.5rem;
+    }
+
+    &__button{
+    }
+}

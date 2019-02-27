@@ -1,0 +1,11 @@
+.modal.select-schedule-modal(id="select-schedule-modal" data-status="close")
+  .modal__background.modal__background--dark.close-modal(id="" data-target="#select-schedule-modal")
+  .modal__container
+    .modal__header 
+      h2.select-schedule-modal__header select schedule
+    .modal__body
+      form.select-schedule-modal__form(action="/admin/schedules/selected" method="POST")
+        select.input.select-schedule-modal__select(name="selectedId")
+          each schedule in schedules
+            option(value=schedule._id selected=schedule.selected)= schedule.title
+        button.btn.select-schedule-modal__button(type="submit") save

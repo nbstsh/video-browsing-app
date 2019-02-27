@@ -8,7 +8,7 @@ block content
   .section-selected-schedule 
     .selected-schedule
       h2.selected-schedule__title selected schedule
-      span.selected-schedule__change-icon c
+      span.selected-schedule__change-icon.open-modal(data-target='#select-schedule-modal') c
       .selected-schedule__box
         ul.selected-schedule__list
           li.selected-schedule__item
@@ -32,19 +32,15 @@ block content
           tbody
             each schedule in schedules
               tr.schedule-list__list
-                  td
-                    a(href=`/admin/schedules/${schedule._id}`)= schedule.title
-                  td= schedule.duration
+                td
+                  a(href=`/admin/schedules/${schedule._id}`)= schedule.title
+                td= schedule.duration
 
-  form(action="/admin/schedules/selected" method="POST")
-    select(name="selectedId")
-      each schedule in schedules
-        option(value=schedule._id)= schedule.title
-    button(type="submit") save
 
 block foot
 
   include ../../includes/modals/create-schedule
+  include ../../includes/modals/select-schedule
 
 block script 
 
