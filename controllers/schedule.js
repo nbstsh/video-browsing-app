@@ -90,7 +90,7 @@ exports.edit = async (req, res) => {
     }
 
     const times = generateTimeList(days[0].times)
-    res.render('admin/schedules/show', { days, times , scheduleId: _id})
+    res.render('admin/schedules/edit', { days, times , scheduleId: _id})
 }
 
 /************************
