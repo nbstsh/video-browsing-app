@@ -3,24 +3,61 @@ extends ../../layout/admin
 block head 
 
   title video schedule
-  link(rel="stylesheet", href="/css/style.css")
 
 
 block content 
   include ../../mixins/schedule-table
 
-  .program 
-    table.program__table
-      tbody
-        +timeList(times)
-        +scheduleTable(days, {
-            'class':  'open-modal',
-            'data-target': '#video-option-modal'
-          })
-    form#schedule-form(method="POST" action=`/admin/schedules/${scheduleId}`)
-      input(type="hidden" name="selectedVideos")
-      button.button  save
+  //- .program 
+  //-   table.program__table
+  //-     tbody
+  //-       +timeList(times)
+  //-       +scheduleTable(days, {
+  //-           'class':  'open-modal',
+  //-           'data-target': '#video-option-modal'
+  //-         })
+  //-   form#schedule-form(method="POST" action=`/admin/schedules/${scheduleId}`)
+  //-     input(type="hidden" name="selectedVideos")
+  //-     button.button  save
 
+  .program
+    ul.program__week
+      each dayObj in days
+        li.program__day= dayObj.day
+    
+    .program__scroll 
+      
+      ul.program__time
+        each timeObj in days[0].times
+          li.program__time-item= timeObj.time
+
+      .program__schedule
+        each dayObj in days
+          ul.program__list(class=dayObj.day)
+            each timeObj in dayObj.times
+              if timeObj.video
+                - const { _id, path, title, description, type, videoId } = timeObj.video
+                li.program__item(
+                  data-time-id=timeObj.id
+                  data-time=timeObj.time
+                  data-video-object-id=_id 
+                  data-video-id=videoId
+                  data-type=type
+                  data-title=title 
+                  data-description=description
+                )&attributes(attrs)
+                  img(src=path)
+              else
+                li.program__item(
+                  data-time-id=timeObj.id
+                  data-time=timeObj.time
+                )&attributes(attrs)
+                  img
+      
+    .program__button-box 
+      form#schedule-form(method="POST" action=`/admin/schedules/${scheduleId}`)
+        input(type="hidden" name="selectedVideos")
+        button.btn save
 
 block foot
 

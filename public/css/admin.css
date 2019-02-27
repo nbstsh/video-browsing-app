@@ -317,3 +317,76 @@ a:visited {
   margin-bottom: 3rem;
   padding-left: 1rem;
   text-indent: 1.5rem; }
+
+.program {
+  margin-top: 5rem; }
+  .program__week {
+    height: 7rem;
+    display: grid;
+    grid-template-columns: [full-start] minmax(8rem, 2fr) [center-start] repeat(7, [day-start] minmax(min-content, 14rem) [day-end]) [center-end] minmax(1rem, 1fr) [full-end];
+    background-color: var(--color-grey-dark-1);
+    color: #fff;
+    border-radius: 2px 2px 0 0; }
+    .program__week > li:nth-of-type(1) {
+      grid-column: day-start 1 / day-end 1; }
+    .program__week > li:nth-of-type(2) {
+      grid-column: day-start 2 / day-end 2; }
+    .program__week > li:nth-of-type(3) {
+      grid-column: day-start 3 / day-end 3; }
+    .program__week > li:nth-of-type(4) {
+      grid-column: day-start 4 / day-end 4; }
+    .program__week > li:nth-of-type(5) {
+      grid-column: day-start 5 / day-end 5; }
+    .program__week > li:nth-of-type(6) {
+      grid-column: day-start 6 / day-end 6; }
+    .program__week > li:nth-of-type(7) {
+      grid-column: day-start 7 / day-end 7; }
+    .program__week > li:nth-of-type(8) {
+      grid-column: day-start 8 / day-end 8; }
+    .program__week > li {
+      display: flex;
+      justify-content: center;
+      align-items: center; }
+  .program__scroll {
+    display: grid;
+    grid-template-columns: [full-start] minmax(8rem, 2fr) [center-start] repeat(7, [day-start] minmax(min-content, 14rem) [day-end]) [center-end] minmax(1rem, 1fr) [full-end];
+    height: 80vh;
+    overflow-y: scroll;
+    border: 1px solid var(--color-grey-light-4);
+    padding: 2rem 0;
+    border-radius: 0 0 2px 2px; }
+  .program__time {
+    grid-column: full-start / center-start;
+    justify-content: center;
+    align-items: center;
+    display: grid;
+    grid-template-rows: repeat(auto-fill, 1fr); }
+    .program__time > li {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: var(--color-grey-dark-2);
+      font-weight: bold; }
+  .program__schedule {
+    grid-column: center-start / center-end;
+    display: grid;
+    grid-template-columns: repeat(7, [day] minmax(min-content, 14rem) [day]);
+    background-color: #fff; }
+  .program__item {
+    margin: .5rem;
+    height: 8vw;
+    border: 1px solid var(--color-grey-light-2);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+    transition: all .2s;
+    cursor: pointer; }
+    .program__item:hover {
+      box-shadow: 0 3px 3px rgba(0, 0, 0, 0.1);
+      transform: translateY(-3%) scale(1.1); }
+  .program__button-box {
+    height: 15rem;
+    display: flex;
+    justify-content: center;
+    align-items: center; }
+    .program__button-box button {
+      height: 6rem;
+      width: 25rem; }
